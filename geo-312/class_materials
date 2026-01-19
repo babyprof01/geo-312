@@ -1,0 +1,498 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "id": "0",
+      "metadata": {
+        "id": "0"
+      },
+      "source": [
+        "# Looping and Control Statements\n",
+        "\n",
+        "[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/giswqs/geog-312/blob/main/book/python/05_looping.ipynb)\n",
+        "\n",
+        "## Overview\n",
+        "\n",
+        "This lecture introduces looping and control statements in Python, focusing on their applications in geospatial programming. Loops and control statements are essential tools for automating repetitive tasks, making decisions based on data conditions, and efficiently processing large geospatial datasets. By mastering these concepts, you will be able to handle complex geospatial analysis tasks with greater efficiency and precision.\n",
+        "\n",
+        "## Learning Objectives\n",
+        "\n",
+        "By the end of this lecture, you should be able to:\n",
+        "\n",
+        "- Understand and implement `for` loops to iterate over sequences such as lists and tuples.\n",
+        "- Use `while` loops to perform tasks until a specific condition is met.\n",
+        "- Apply control statements (`if`, `elif`, `else`) to execute different blocks of code based on data conditions.\n",
+        "- Combine loops and control statements to filter, process, and analyze geospatial data.\n",
+        "- Develop the ability to automate repetitive geospatial tasks, making your data processing workflows more efficient.\n",
+        "\n",
+        "## For Loops\n",
+        "\n",
+        "For loops allow you to iterate over a sequence (such as a list, tuple, or string) and execute a block of code for each item in the sequence. This is particularly useful in geospatial programming when you need to process multiple features or coordinates."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "1",
+      "metadata": {
+        "id": "1"
+      },
+      "outputs": [],
+      "source": [
+        "coordinates = [\n",
+        "    (35.6895, 139.6917),\n",
+        "    (34.0522, -118.2437),\n",
+        "    (51.5074, -0.1278),\n",
+        "]  # List of tuples representing coordinates\n",
+        "\n",
+        "for lat, lon in coordinates:\n",
+        "    print(f\"Latitude: {lat}, Longitude: {lon}\")"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "2",
+      "metadata": {
+        "id": "2"
+      },
+      "source": [
+        "Assuming you have a function to calculate distances, you can use a loop to compute distances from a reference point."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "3",
+      "metadata": {
+        "id": "3"
+      },
+      "outputs": [],
+      "source": [
+        "def calculate_distance(lat1, lon1, lat2, lon2):\n",
+        "    # Placeholder for distance calculation logic\n",
+        "    return ((lat2 - lat1) ** 2 + (lon2 - lon1) ** 2) ** 0.5\n",
+        "\n",
+        "\n",
+        "reference_point = (0, 0)  # Reference point (latitude, longitude)\n",
+        "\n",
+        "for lat, lon in coordinates:\n",
+        "    distance = calculate_distance(reference_point[0], reference_point[1], lat, lon)\n",
+        "    print(f\"Distance from {reference_point} to ({lat}, {lon}): {distance:.2f}\")"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "4",
+      "metadata": {
+        "id": "4"
+      },
+      "source": [
+        "## While Loops\n",
+        "\n",
+        "While loops continue to execute a block of code as long as a specified condition is true. They are useful when the number of iterations is not known beforehand, such as when processing data until a certain condition is met."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "5",
+      "metadata": {
+        "id": "5"
+      },
+      "outputs": [],
+      "source": [
+        "counter = 0\n",
+        "while counter < len(coordinates):\n",
+        "    lat, lon = coordinates[counter]\n",
+        "    print(f\"Processing coordinate: ({lat}, {lon})\")\n",
+        "    counter += 1"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "6",
+      "metadata": {
+        "id": "6"
+      },
+      "source": [
+        "## Control Statements: if, elif, else\n",
+        "\n",
+        "Control statements allow you to execute different blocks of code based on certain conditions. In geospatial programming, this is useful for handling different types of data or conditions."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "7",
+      "metadata": {
+        "id": "7"
+      },
+      "outputs": [],
+      "source": [
+        "for lat, lon in coordinates:\n",
+        "    if lat > 0:\n",
+        "        print(f\"{lat} is in the Northern Hemisphere\")\n",
+        "    elif lat < 0:\n",
+        "        print(f\"{lat} is in the Southern Hemisphere\")\n",
+        "    else:\n",
+        "        print(f\"{lat} is near the equator\")"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "8",
+      "metadata": {
+        "id": "8"
+      },
+      "source": [
+        "You can further categorize based on longitude:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "9",
+      "metadata": {
+        "id": "9"
+      },
+      "outputs": [],
+      "source": [
+        "for lat, lon in coordinates:\n",
+        "    if lat > 0:\n",
+        "        hemisphere = \"Northern\"\n",
+        "    else:\n",
+        "        hemisphere = \"Southern\"\n",
+        "\n",
+        "    if lon > 0:\n",
+        "        direction = \"Eastern\"\n",
+        "    else:\n",
+        "        direction = \"Western\"\n",
+        "\n",
+        "    print(\n",
+        "        f\"The coordinate ({lat}, {lon}) is in the {hemisphere} Hemisphere and {direction} Hemisphere.\"\n",
+        "    )"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "10",
+      "metadata": {
+        "id": "10"
+      },
+      "source": [
+        "## Combining Loops and Control Statements\n",
+        "\n",
+        "You can combine loops and control statements to perform more complex operations, such as filtering data or applying conditions during iteration."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "11",
+      "metadata": {
+        "id": "11"
+      },
+      "outputs": [],
+      "source": [
+        "filtered_coordinates = []\n",
+        "for lat, lon in coordinates:\n",
+        "    if lon > 0:\n",
+        "        filtered_coordinates.append((lat, lon))\n",
+        "print(f\"Filtered coordinates (only with positive longitude): {filtered_coordinates}\")"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "12",
+      "metadata": {
+        "id": "12"
+      },
+      "outputs": [],
+      "source": [
+        "southern_count = 0\n",
+        "for lat, lon in coordinates:\n",
+        "    if lat < 0:\n",
+        "        southern_count += 1\n",
+        "print(f\"Number of coordinates in the Southern Hemisphere: {southern_count}\")"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "13",
+      "metadata": {
+        "id": "13"
+      },
+      "source": [
+        "## Exercises\n",
+        "\n",
+        "1. Create a list of cities with their coordinates. Write a for loop to print out only the cities that are in the Northern Hemisphere.\n",
+        "2. Write a while loop that continues to print the coordinates in a list until a coordinate with a latitude less than 0 is found.\n",
+        "3. Create a for loop that iterates through a list of coordinates and prints whether each coordinate is in the Eastern or Western Hemisphere based on the longitude.\n",
+        "4. Combine a for loop and if statements to count how many coordinates in a list are located in the Southern Hemisphere.\n",
+        "5. Write a program that generates random coordinates (latitude and longitude) and prints them until a coordinate with both latitude and longitude greater than 50 is generated."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 3,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "hwLWcaZP-pcl",
+        "outputId": "0112cd92-50d9-4b45-d1c9-77fb9a16c88b"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Cities in the Northern Hemisphere:\n",
+            "- New York (Latitude: 40.7128)\n",
+            "- London (Latitude: 51.5074)\n",
+            "- Tokyo (Latitude: 35.6895)\n"
+          ]
+        }
+      ],
+      "source": [
+        "#create a list of ccities with their coordiates. Write a for loop to print out only the cities in the northern hemisphere.\n",
+        "cities = [\n",
+        "    {\"name\": \"New York\", \"coordinates\": (40.7128, -74.0060)},\n",
+        "    {\"name\": \"London\", \"coordinates\": (51.5074, -0.1278)},\n",
+        "    {\"name\": \"Sydney\", \"coordinates\": (-33.8688, 151.2093)},\n",
+        "    {\"name\": \"Tokyo\", \"coordinates\": (35.6895, 139.6917)},\n",
+        "    {\"name\": \"Rio de Janeiro\", \"coordinates\": (-22.9068, -43.1729)}\n",
+        "]\n",
+        "\n",
+        "print(\"Cities in the Northern Hemisphere:\")\n",
+        "for city in cities:\n",
+        "    lat = city[\"coordinates\"][0]\n",
+        "    if lat > 0:\n",
+        "        print(f\"- {city['name']} (Latitude: {lat})\")"
+      ],
+      "id": "hwLWcaZP-pcl"
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#Write a while loop that continues to print the coordinates in a list until a coordinate with a latitude less than 0 is found.\n",
+        "\n",
+        "coordinates = [\n",
+        "    {\"name\": \"New York\", \"coordinates\": (40.7128, -74.0060)},\n",
+        "    {\"name\": \"London\", \"coordinates\": (51.5074, -0.1278)},\n",
+        "    {\"name\": \"Sydney\", \"coordinates\": (-33.8688, 151.2093)},\n",
+        "    {\"name\": \"Tokyo\", \"coordinates\": (35.6895, 139.6917)},\n",
+        "    {\"name\": \"Rio de Janeiro\", \"coordinates\": (-22.9068, -43.1729)}\n",
+        "]\n",
+        "\n",
+        "index = 0\n",
+        "print(\"Coordinates until a negative latitude is found:\")\n",
+        "while index < len(coordinates):\n",
+        "    # Access the coordinates tuple directly from the dictionary\n",
+        "    lat, lon = coordinates[index][\"coordinates\"]\n",
+        "    if lat < 0:\n",
+        "        print(f\"Found coordinate with negative latitude: ({lat}, {lon}). Stopping.\")\n",
+        "        break\n",
+        "    else:\n",
+        "        print(f\"Processing coordinate: ({lat}, {lon})\")\n",
+        "    index += 1"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "_hJ2vswpAEqF",
+        "outputId": "4a005f82-7be5-4e97-97cd-56cdae46c618"
+      },
+      "id": "_hJ2vswpAEqF",
+      "execution_count": 6,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Coordinates until a negative latitude is found:\n",
+            "Processing coordinate: (40.7128, -74.006)\n",
+            "Processing coordinate: (51.5074, -0.1278)\n",
+            "Found coordinate with negative latitude: (-33.8688, 151.2093). Stopping.\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#Create a for loop that iterates through a list of coordinates and prints whether each coordinate is in the Eastern or Western Hemisphere based on the longitude.\n",
+        "cities = [\n",
+        "    {\"name\": \"New York\", \"coordinates\": (40.7128, -74.0060)},\n",
+        "    {\"name\": \"London\", \"coordinates\": (51.5074, -0.1278)},\n",
+        "    {\"name\": \"Sydney\", \"coordinates\": (-33.8688, 151.2093)},\n",
+        "    {\"name\": \"Tokyo\", \"coordinates\": (35.6895, 139.6917)},\n",
+        "    {\"name\": \"Rio de Janeiro\", \"coordinates\": (-22.9068, -43.1729)}\n",
+        "]\n",
+        "\n",
+        "for city in cities:\n",
+        "    lat = city[\"coordinates\"][0]\n",
+        "    if lat > 0:\n",
+        "        print(f\"- {city['name']} (Latitude: {lat}) is in the northern hemisphere\")\n",
+        "    else:\n",
+        "        print(f\"- {city['name']} (Latitude: {lat}) is in the southern hemisphere\")\n",
+        "\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "GvPE5iK1Cwmx",
+        "outputId": "52096c78-2d9a-4636-876b-b1afbbe2e602"
+      },
+      "id": "GvPE5iK1Cwmx",
+      "execution_count": 7,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "- New York (Latitude: 40.7128) is in the northern hemisphere\n",
+            "- London (Latitude: 51.5074) is in the northern hemisphere\n",
+            "- Sydney (Latitude: -33.8688) is in the southern hemisphere\n",
+            "- Tokyo (Latitude: 35.6895) is in the northern hemisphere\n",
+            "- Rio de Janeiro (Latitude: -22.9068) is in the southern hemisphere\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#Combine a for loop and if statements to count how many coordinates in a list are located in the Southern Hemisphere.\n",
+        "cities = [\n",
+        "    {\"name\": \"New York\", \"coordinates\": (40.7128, -74.0060)},\n",
+        "    {\"name\": \"London\", \"coordinates\": (51.5074, -0.1278)},\n",
+        "    {\"name\": \"Sydney\", \"coordinates\": (-33.8688, 151.2093)},\n",
+        "    {\"name\": \"Tokyo\", \"coordinates\": (35.6895, 139.6917)},\n",
+        "    {\"name\": \"Rio de Janeiro\", \"coordinates\": (-22.9068, -43.1729)}\n",
+        "]\n",
+        "\n",
+        "southern_hemisphere_count = 0\n",
+        "for city in cities:\n",
+        "    lat = city[\"coordinates\"][0]\n",
+        "    if lat < 0:\n",
+        "        southern_hemisphere_count += 1\n",
+        "\n",
+        "print(f\"Number of cities in the Southern Hemisphere: {southern_hemisphere_count}\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "lsZOAYrNDiIk",
+        "outputId": "95870d17-9ee2-4bd6-b7f2-5612be6aa58a"
+      },
+      "id": "lsZOAYrNDiIk",
+      "execution_count": 8,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Number of cities in the Southern Hemisphere: 2\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "NUsFydX6EZcA"
+      },
+      "id": "NUsFydX6EZcA",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "0efe666e",
+        "outputId": "7e73347f-a376-4dc3-a90b-78fb85567f55"
+      },
+      "source": [
+        "import random\n",
+        "\n",
+        "print(\"Generating random coordinates until both latitude and longitude are greater than 50:\")\n",
+        "\n",
+        "while True:\n",
+        "    latitude = random.uniform(-90, 90)  # Latitude ranges from -90 to 90\n",
+        "    longitude = random.uniform(-180, 180) # Longitude ranges from -180 to 180\n",
+        "    print(f\"Generated coordinate: (Latitude: {latitude:.2f}, Longitude: {longitude:.2f})\")\n",
+        "\n",
+        "    if latitude > 50 and longitude > 50:\n",
+        "        print(f\"Found coordinate with both latitude ({latitude:.2f}) and longitude ({longitude:.2f}) greater than 50. Stopping.\")\n",
+        "        break"
+      ],
+      "id": "0efe666e",
+      "execution_count": 9,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Generating random coordinates until both latitude and longitude are greater than 50:\n",
+            "Generated coordinate: (Latitude: 30.65, Longitude: -135.54)\n",
+            "Generated coordinate: (Latitude: -30.27, Longitude: -80.17)\n",
+            "Generated coordinate: (Latitude: 1.34, Longitude: 157.09)\n",
+            "Generated coordinate: (Latitude: -60.21, Longitude: 127.95)\n",
+            "Generated coordinate: (Latitude: -65.12, Longitude: 106.62)\n",
+            "Generated coordinate: (Latitude: -49.75, Longitude: 64.51)\n",
+            "Generated coordinate: (Latitude: -29.94, Longitude: -115.61)\n",
+            "Generated coordinate: (Latitude: -81.42, Longitude: -2.04)\n",
+            "Generated coordinate: (Latitude: 5.18, Longitude: 93.47)\n",
+            "Generated coordinate: (Latitude: 77.61, Longitude: 95.99)\n",
+            "Found coordinate with both latitude (77.61) and longitude (95.99) greater than 50. Stopping.\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "15",
+      "metadata": {
+        "id": "15"
+      },
+      "source": [
+        "## Summary\n",
+        "\n",
+        "Loops and control statements are fundamental tools in geospatial programming. They allow you to process and analyze geographic data efficiently by automating repetitive tasks and applying logic based on data conditions. Practice these concepts by applying them to your geospatial datasets and analyses."
+      ]
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "ipython",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.11.8"
+    },
+    "colab": {
+      "provenance": []
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
